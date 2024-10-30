@@ -4,6 +4,14 @@ terraform {
       source = "hashicorp/google"
     }
   }
+  cloud { 
+    
+    organization = "EQIX_projectX" 
+
+    workspaces { 
+      name = "terraform-equinix-gcp-components" 
+    } 
+  } 
 }
 
 provider "google" {
@@ -42,11 +50,6 @@ resource "google_compute_instance" "vm_instance" {
     network = data.terraform_remote_state.gcp_outputs.outputs.vpc_gcp
   }
 }
-
-# resource "google_compute_network" "vpc_network" {
-#   name                    = var.gcp_vpc_name
-#   auto_create_subnetworks = "true"
-# }
 
 resource "google_compute_firewall" "icmp" {
   name    = "allow-icmp"
